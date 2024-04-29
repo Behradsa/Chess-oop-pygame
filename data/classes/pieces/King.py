@@ -91,8 +91,14 @@ class King(Piece):
                 output.append(square)
 
         if "queenside" in self.can_castle(board):
-            output.append(board.get_square_from_pos((self.x - 2, self.y)))
+            if not board.is_in_check(
+                self.color, board_change=[self.pos, (self.x - 2, self.y)]
+            ):
+                output.append(board.get_square_from_pos((self.x - 2, self.y)))
         if "kingside" in self.can_castle(board):
-            output.append(board.get_square_from_pos((self.x + 2, self.y)))
+            if not board.is_in_check(
+                self.color, board_change=[self.pos, (self.x + 2, self.y)]
+            ):
+                output.append(board.get_square_from_pos((self.x + 2, self.y)))
 
         return output

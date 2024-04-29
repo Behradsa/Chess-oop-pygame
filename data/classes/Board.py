@@ -188,11 +188,13 @@ class Board:
 
         if king.get_valid_moves(self) == []:
             if self.is_in_check(color):
+                king_square.highlight = True
+                output = True
                 for piece in pieces:
                     if piece.color == color:
-                        if piece.get_valid_moves(self) == []:
-                            king_square.highlight = True
-                            output = True
+                        if piece.get_valid_moves(self) != []:
+                            king_square.highlight = False
+                            output = False
 
         return output
 
