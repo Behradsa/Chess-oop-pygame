@@ -176,6 +176,9 @@ class Board:
 
     def is_in_checkmate(self, color):
         output = False
+        pieces = [
+            i.occupying_piece for i in self.squares if i.occupying_piece is not None
+        ]
         for i in self.squares:
             piece = i.occupying_piece
             if piece != None:
@@ -185,9 +188,11 @@ class Board:
 
         if king.get_valid_moves(self) == []:
             if self.is_in_check(color):
-
-                king_square.highlight = True
-                output = True
+                for piece in pieces:
+                    if piece.color == color:
+                        if piece.get_valid_moves(self) == []:
+                            king_square.highlight = True
+                            output = True
 
         return output
 
